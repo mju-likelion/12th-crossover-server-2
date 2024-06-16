@@ -1,4 +1,4 @@
-package model;
+package org.example.crossoverserver2.planeletter.model;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;

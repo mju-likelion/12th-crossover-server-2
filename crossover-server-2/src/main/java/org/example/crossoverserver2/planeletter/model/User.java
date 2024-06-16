@@ -1,7 +1,6 @@
-package model;
+package org.example.crossoverserver2.planeletter.model;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 

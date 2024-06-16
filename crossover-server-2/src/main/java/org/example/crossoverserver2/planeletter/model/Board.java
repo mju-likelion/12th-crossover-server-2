@@ -1,6 +1,5 @@
-package model;
+package org.example.crossoverserver2.planeletter.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -10,7 +9,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Entity
+@Entity(name = "board")
 public class Board extends BaseEntity{
 
     @Setter

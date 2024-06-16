@@ -1,4 +1,4 @@
-package model;
+package org.example.crossoverserver2.planeletter.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Entity
+@Entity(name = "comment")
 public class Comment  extends BaseEntity {
 
     @Column(nullable = false)
