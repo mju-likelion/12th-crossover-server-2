@@ -1,4 +1,4 @@
-package model;
+package org.example.crossoverserver2.planeletter.model;
 
 
 import jakarta.persistence.*;
@@ -13,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Entity(name = "user")
+@Entity(name = "clause")
 public class Clause extends BaseEntity{
 
     @Column(nullable = false, unique = true)
