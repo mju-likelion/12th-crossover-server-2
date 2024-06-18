@@ -29,6 +29,9 @@ public class User extends BaseEntity {
     @Column(nullable = false)
     private String password;
 
+    @Column
+    private String salt;
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true , fetch = FetchType.LAZY)
     private List<Board> boards;
 
