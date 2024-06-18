@@ -3,7 +3,7 @@ package org.example.crossoverserver2.planeletter.controller;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.example.crossoverserver2.planeletter.dto.request.WriteCommentDto;
-import org.example.crossoverserver2.planeletter.dto.response.ResponseDto;
+import org.example.crossoverserver2.planeletter.dto.ResponseDto;
 import org.example.crossoverserver2.planeletter.dto.response.comment.CommentListResponseData;
 import org.example.crossoverserver2.planeletter.model.User;
 import org.example.crossoverserver2.planeletter.service.CommentService;

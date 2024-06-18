@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import org.example.crossoverserver2.planeletter.dto.request.WriteBoardDto;
 import org.example.crossoverserver2.planeletter.dto.response.board.BoardListResponseData;
 import org.example.crossoverserver2.planeletter.dto.response.board.BoardResponseData;
-import org.example.crossoverserver2.planeletter.dto.response.ResponseDto;
+import org.example.crossoverserver2.planeletter.dto.ResponseDto;
 import org.example.crossoverserver2.planeletter.model.User;
 import org.example.crossoverserver2.planeletter.service.BoardService;
 import org.springframework.http.HttpStatus;

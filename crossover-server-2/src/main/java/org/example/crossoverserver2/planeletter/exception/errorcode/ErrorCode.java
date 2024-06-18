@@ -16,21 +16,28 @@ public enum ErrorCode {
 
     USER_UNAUTHORIZED("4010", "로그인에 실패했습니다."),
 
-
-
-    EMAIL_CONFLICT("4090", "이미 존재하는 이메일입니다."),
-    USERID_CONFLICT("4091","이미 존재하는 유저아이디입니다");
-
-
+    //ForbiddenException
+    NO_ACCESS("4030", "접근 권한이 없습니다."),
 
     //NotFoundException
     NOT_FOUND_BOARD("4041","게시물을 찾을 수 없습니다."),
 
-    //ForbiddenException
-    NO_ACCESS("4030", "접근 권한이 없습니다."),
 
-    //AlreadyExistException
-    ALREADY_EXIST("4092","중복된 리소스입니다."),
+
+    EMAIL_CONFLICT("4090", "이미 존재하는 이메일입니다."),
+    USERID_CONFLICT("4091","이미 존재하는 유저아이디입니다"),
+    ALREADY_EXIST("4092","중복된 리소스입니다.");
+
+
+
+
+
+
+
+
+
+
+
 
   
 
