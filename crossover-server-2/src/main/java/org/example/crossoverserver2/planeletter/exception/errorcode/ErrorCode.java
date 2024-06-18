@@ -7,6 +7,15 @@ import lombok.Getter;
 @Getter
 public enum ErrorCode {
 
+    //NotFoundException
+    NOT_FOUND_BOARD("4041","게시물을 찾을 수 없습니다."),
+
+    //ForbiddenException
+    NO_ACCESS("4030", "접근 권한이 없습니다."),
+
+    //AlreadyExistException
+    ALREADY_EXIST("4090","중복된 리소스입니다."),
+
     SIZE("4000", "길이가 유효하지 않습니다.");
 
 
