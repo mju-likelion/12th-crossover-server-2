@@ -1,4 +1,4 @@
-package org.example.crossoverserver2.planeletter.dto.response;
+package org.example.crossoverserver2.planeletter.dto.response.board;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -10,5 +10,6 @@ import java.time.LocalDateTime;
 public class BoardResponseData {
     private String name;
     private String title;
-    private LocalDateTime content;
+    private String content;
+    private LocalDateTime createdTime;
 }
