@@ -1,4 +1,4 @@
-package org.example.crossoverserver2.planeletter.dto.request;
+package org.example.crossoverserver2.planeletter.dto.request.comment;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;

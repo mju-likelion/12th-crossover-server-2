@@ -1,7 +1,7 @@
 package org.example.crossoverserver2.planeletter.service;
 
 import lombok.AllArgsConstructor;
-import org.example.crossoverserver2.planeletter.dto.request.WriteCommentDto;
+import org.example.crossoverserver2.planeletter.dto.request.comment.WriteCommentDto;
 import org.example.crossoverserver2.planeletter.dto.response.comment.CommentDto;
 import org.example.crossoverserver2.planeletter.dto.response.comment.CommentListResponseData;
 import org.example.crossoverserver2.planeletter.exception.ForbiddenException;
