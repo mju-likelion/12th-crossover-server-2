@@ -21,17 +21,19 @@ public class AuthController {
     @GetMapping("/sign-up")
     public ResponseEntity<ResponseDto<ClauseListResponseData>> loadSignUpPage(){
         ClauseListResponseData clauseListResponseData = authService.getClauses();
-        return new ResponseEntity<>(ResponseDto.res(HttpStatus.OK,"로그인 창 조회 성공",clauseListResponseData),HttpStatus.OK);
+        return new ResponseEntity<>(ResponseDto.res(HttpStatus.OK,"회원가입 페이지 조회 성공",clauseListResponseData),HttpStatus.OK);
     }
 
     @PostMapping("/sign-up")
-    public void signUp(@RequestBody @Valid SignUpRequestData signUpRequestData){
+    public ResponseEntity<ResponseDto<Void>> signUp(@RequestBody @Valid SignUpRequestData signUpRequestData){
         authService.signUp(signUpRequestData);
+        return new ResponseEntity<>(ResponseDto.res(HttpStatus.CREATED, "회원가입 성공"),HttpStatus.CREATED);
     }
 
     @PostMapping("/login")
-    public void login(@RequestBody @Valid LoginRequestData loginRequestData){
+    public ResponseEntity<ResponseDto<Void>> login(@RequestBody @Valid LoginRequestData loginRequestData){
         authService.login(loginRequestData);
+        return new ResponseEntity<>(ResponseDto.res(HttpStatus.OK, "로그인 성공"),HttpStatus.OK);
     }
 
 

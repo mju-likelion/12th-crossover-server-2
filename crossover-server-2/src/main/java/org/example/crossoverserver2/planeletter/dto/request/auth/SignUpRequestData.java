@@ -9,6 +9,8 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
+import static org.example.crossoverserver2.planeletter.constant.RegexPatterns.APPLICATION_PASSWORD_PATTERN;
+import static org.example.crossoverserver2.planeletter.constant.RegexPatterns.APPLICATION_USERID_PATTERN;
 
 
 @AllArgsConstructor
@@ -16,13 +18,13 @@ import org.hibernate.validator.constraints.Length;
 public class SignUpRequestData {
 
     @NotBlank(message = "아이디는 필수 항목입니다.")
-    @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*\\d)", message = "아이디는 영문, 숫자를 모두 포함해야 합니다.")
+    @Pattern(regexp = APPLICATION_USERID_PATTERN, message = "아이디는 영문, 숫자를 모두 포함해야 합니다.")
     @Length(max = 9)
     private String id;
 
     @NotBlank(message = "비밀번호는 필수 항목입니다.")
     @Size(min = 8, max = 13, message = "비밀번호는 8자 이상, 14자 미만으로 작성해야 합니다.")
-    @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*[!@#$%^&*?])(?=.*\\d)", message ="비밀번호는 영문, 숫자, 특수문자를 모두 포함해야 합니다.")
+    @Pattern(regexp = APPLICATION_PASSWORD_PATTERN, message ="비밀번호는 영문, 숫자, 특수문자를 모두 포함해야 합니다.")
     private String password;
 
     @NotBlank(message = "이름은 필수 항목입니다.")
