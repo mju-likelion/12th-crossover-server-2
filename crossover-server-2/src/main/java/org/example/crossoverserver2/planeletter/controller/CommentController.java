@@ -2,6 +2,7 @@ package org.example.crossoverserver2.planeletter.controller;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.example.crossoverserver2.planeletter.annotation.AuthenticatedUser;
 import org.example.crossoverserver2.planeletter.dto.request.comment.WriteCommentDto;
 import org.example.crossoverserver2.planeletter.dto.ResponseDto;
 import org.example.crossoverserver2.planeletter.dto.response.comment.CommentListResponseData;
@@ -23,8 +24,7 @@ public class CommentController {
 
     //댓글 작성
     @PostMapping
-    //@AuthenticatedUser 어노테이션 추가해서 인증된 유저 받는 거 수정
-    public ResponseEntity<ResponseDto<Void>> writeComment(User user, @PathVariable UUID boardId, @RequestBody @Valid WriteCommentDto writeCommentDto){
+    public ResponseEntity<ResponseDto<Void>> writeComment(@AuthenticatedUser User user, @PathVariable UUID boardId, @RequestBody @Valid WriteCommentDto writeCommentDto){
         commentService.writeComment(user,boardId,writeCommentDto);
         return new ResponseEntity<>(ResponseDto.res(HttpStatus.CREATED,"댓글을 성공적으로 작성하였습니다."), HttpStatus.CREATED);
     }
@@ -37,7 +37,7 @@ public class CommentController {
     }
     //댓글 삭제
     @DeleteMapping("/{id}")
-    public ResponseEntity<ResponseDto<Void>> removeCommentById(User user
+    public ResponseEntity<ResponseDto<Void>> removeCommentById(@AuthenticatedUser User user
             ,@PathVariable("boardId") UUID boardId, @PathVariable("id") UUID id){
         commentService.removeCommentById(user, boardId, id);
         return new ResponseEntity<>(ResponseDto.res(HttpStatus.OK,"댓글이 삭제되었습니다."), HttpStatus.OK);
