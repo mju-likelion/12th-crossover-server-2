@@ -23,7 +23,7 @@ public class BoardController {
     public final BoardService boardService;
 
     //게시글 작성
-    @PostMapping
+    @PostMapping()
     //@AuthenticatedUser 어노테이션 추가해서 인증된 유저 받는 거 수정
     public ResponseEntity<ResponseDto<Void>> writeBoard(User user, @RequestBody @Valid WriteBoardDto writeBoardDto){
         boardService.writeBoard(user, writeBoardDto);

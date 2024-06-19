@@ -22,7 +22,7 @@ public class CommentController {
     public final CommentService commentService;
 
     //댓글 작성
-    @PostMapping
+    @PostMapping()
     //@AuthenticatedUser 어노테이션 추가해서 인증된 유저 받는 거 수정
     public ResponseEntity<ResponseDto<Void>> writeComment(User user, @PathVariable UUID boardId, @RequestBody @Valid WriteCommentDto writeCommentDto){
         commentService.writeComment(user,boardId,writeCommentDto);
@@ -30,7 +30,7 @@ public class CommentController {
     }
     //댓글 조회
     //댓글도 페이지네이션?
-    @GetMapping
+    @GetMapping()
     public ResponseEntity<ResponseDto<CommentListResponseData>> getCommentList(@PathVariable("boardId") UUID boardId){
         CommentListResponseData commentListResponseData = commentService.getCommentList(boardId);
         return new ResponseEntity<>(ResponseDto.res(HttpStatus.OK, "댓글 목록을 조회합니다.", commentListResponseData),HttpStatus.OK);
