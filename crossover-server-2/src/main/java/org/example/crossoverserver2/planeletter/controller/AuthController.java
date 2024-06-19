@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @RestController
@@ -46,8 +47,10 @@ public class AuthController {
 
         String accessToken = jwtTokenProvider.createToken(String.valueOf(id));
         ResponseCookie cookie = ResponseCookie.from("AccessToken", JwtEncoder.encodeJwtBearerToken(accessToken))
-                .maxAge(Duration.ofMinutes(60 * 30))//30분
+                .maxAge(Duration.ofSeconds(60 * 30))//30분
                 .path("/")//모든 경로에서 접근가능
+//                .httpOnly(true)//브라우저에서 쿠키에 접근 못하도록
+//                .secure(true)//https 사용 시에만 토큰 사용
                 .build();
 
         log.info(cookie.toString());
