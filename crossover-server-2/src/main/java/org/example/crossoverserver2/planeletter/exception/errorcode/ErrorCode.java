@@ -24,6 +24,7 @@ public enum ErrorCode {
     NOT_FOUND_USER("4040","유저를 찾을 수 없습니다."),
     NOT_FOUND_BOARD("4041","게시물을 찾을 수 없습니다."),
 
+    //ConflictException
     EMAIL_CONFLICT("4090", "이미 존재하는 이메일입니다."),
     USERID_CONFLICT("4091","이미 존재하는 유저아이디입니다"),
     ALREADY_EXIST("4092","중복된 리소스입니다.");
