@@ -1,4 +1,4 @@
-package org.example.crossoverserver2.planeletter.dto.response.board;
+package org.example.crossoverserver2.planeletter.dto.response;
 
 import lombok.Builder;
 import lombok.Getter;

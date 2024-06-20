@@ -5,7 +5,7 @@ import org.example.crossoverserver2.planeletter.dto.request.board.WriteBoardDto;
 import org.example.crossoverserver2.planeletter.dto.response.board.BoardDto;
 import org.example.crossoverserver2.planeletter.dto.response.board.BoardListResponseData;
 import org.example.crossoverserver2.planeletter.dto.response.board.BoardResponseData;
-import org.example.crossoverserver2.planeletter.dto.response.board.PaginationDto;
+import org.example.crossoverserver2.planeletter.dto.response.PaginationDto;
 import org.example.crossoverserver2.planeletter.exception.ForbiddenException;
 import org.example.crossoverserver2.planeletter.exception.NotFoundException;
 import org.example.crossoverserver2.planeletter.exception.errorcode.ErrorCode;
@@ -47,6 +47,10 @@ public class BoardService {
         Pageable pageable = PageRequest.of(page, pageSize, sort);   //페이지 번호, 페이지 크기, 정렬 조건 설정
 
         Page<Board> boardPage = boardRepository.findAll(pageable);  //해당 페이징 데이터를 모두 가져옴
+
+        if(boardPage.getTotalPages() <= page){
+            throw new NotFoundException(ErrorCode.PAGE_CONFLICT);
+        }
 
         PaginationDto pagination = PaginationDto.builder()
                 .totalPage(boardPage.getTotalPages())

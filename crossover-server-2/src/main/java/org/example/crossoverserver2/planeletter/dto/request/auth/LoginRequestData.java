@@ -4,8 +4,10 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NonNull;
+import lombok.Setter;
 
 @Getter
+@AllArgsConstructor
 public class LoginRequestData {
 
     @NotNull(message = "아이디를 입력해주세요.")

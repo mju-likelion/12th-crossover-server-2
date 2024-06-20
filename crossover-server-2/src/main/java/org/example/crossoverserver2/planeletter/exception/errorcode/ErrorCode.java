@@ -26,6 +26,7 @@ public enum ErrorCode {
     //NotFoundException
     NOT_FOUND_USER("4040","유저를 찾을 수 없습니다."),
     NOT_FOUND_BOARD("4041","게시물을 찾을 수 없습니다."),
+    PAGE_CONFLICT("4042", "존재하지 않는 페이지입니다."),
 
     //ConflictException
     EMAIL_CONFLICT("4090", "이미 존재하는 이메일입니다."),
@@ -37,7 +38,11 @@ public enum ErrorCode {
 
     public static ErrorCode resolveValidationErrorCode(String code){
         return switch (code){
-            case "SIZE" -> SIZE;
+            case "Size" -> SIZE;
+            case "Pattern" -> PATTERN;
+            case "NotBlank" -> NOT_BLANK;
+            case "Length" -> LENGTH;
+            case "Email" -> EMAIL;
             default -> throw new IllegalArgumentException("Unexpected value: " + code);
         };
     }

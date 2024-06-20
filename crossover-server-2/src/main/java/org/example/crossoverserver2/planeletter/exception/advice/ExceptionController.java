@@ -66,7 +66,7 @@ public class ExceptionController {
         String exceptionName = customException.getClass().getSimpleName();
         ErrorCode errorCode = customException.getErrorCode();
         String detail = customException.getDetail();
-        log.error("[{}]{}:{}", exceptionName, errorCode, detail);
+        log.error("[{}]{}:{}", exceptionName, errorCode.getMessage(), detail);
     }
 
     //예측 불가한 오류 출력
