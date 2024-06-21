@@ -17,7 +17,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.Duration;
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 @RestController
@@ -58,5 +57,13 @@ public class AuthController {
         return new ResponseEntity<>(ResponseDto.res(HttpStatus.OK, "로그인 성공"),HttpStatus.OK);
     }
 
-
+    @PostMapping("/logout")
+    public ResponseEntity<ResponseDto<Void>> logout(HttpServletResponse httpServletResponse){
+        ResponseCookie cookie =ResponseCookie.from("AccessToken", null)
+                .maxAge(0)
+                .path("/")
+                .build();
+        httpServletResponse.addHeader("Set-Cookie", cookie.toString());
+        return new ResponseEntity<>(ResponseDto.res(HttpStatus.OK,"로그아웃 성공"),HttpStatus.OK);
+    }
 }
