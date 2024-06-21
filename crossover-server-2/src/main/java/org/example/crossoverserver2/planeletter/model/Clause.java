@@ -12,14 +12,17 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @Entity(name = "clause")
-public class Clause extends BaseEntity{
+public class Clause{
+
+    @Id
+    @Column(unique = true)
+    private int clauseNo;
 
     @Column(nullable = false, unique = true)
     private String title;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
 
     @OneToMany(mappedBy = "clause", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
