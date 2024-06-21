@@ -1,7 +1,7 @@
 package org.example.crossoverserver2.planeletter.service;
 
 import lombok.AllArgsConstructor;
-import org.example.crossoverserver2.planeletter.dto.request.WriteBoardDto;
+import org.example.crossoverserver2.planeletter.dto.request.board.WriteBoardDto;
 import org.example.crossoverserver2.planeletter.dto.response.board.BoardDto;
 import org.example.crossoverserver2.planeletter.dto.response.board.BoardListResponseData;
 import org.example.crossoverserver2.planeletter.dto.response.board.BoardResponseData;
