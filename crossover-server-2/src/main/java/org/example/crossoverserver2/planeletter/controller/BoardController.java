@@ -2,6 +2,7 @@ package org.example.crossoverserver2.planeletter.controller;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.example.crossoverserver2.planeletter.annotation.AuthenticatedUser;
 import org.example.crossoverserver2.planeletter.dto.request.board.WriteBoardDto;
 import org.example.crossoverserver2.planeletter.dto.response.board.BoardListResponseData;
 import org.example.crossoverserver2.planeletter.dto.response.board.BoardResponseData;
@@ -23,9 +24,9 @@ public class BoardController {
     public final BoardService boardService;
 
     //게시글 작성
-    @PostMapping()
-    //@AuthenticatedUser 어노테이션 추가해서 인증된 유저 받는 거 수정
-    public ResponseEntity<ResponseDto<Void>> writeBoard(User user, @RequestBody @Valid WriteBoardDto writeBoardDto){
+    @PostMapping
+    public ResponseEntity<ResponseDto<Void>> writeBoard(@AuthenticatedUser User user, @RequestBody @Valid WriteBoardDto writeBoardDto){
+
         boardService.writeBoard(user, writeBoardDto);
         return new ResponseEntity<>(ResponseDto.res(HttpStatus.CREATED,"게시글이 작성되었습니다."), HttpStatus.CREATED);
     }
@@ -40,15 +41,14 @@ public class BoardController {
     //게시글 상세 조회
     @GetMapping("/{id}")
     //@AuthenticatedUser 어노테이션 추가해서 인증된 유저 받는 거 수정
-    public ResponseEntity<ResponseDto<BoardResponseData>> getBoardById(User user, @PathVariable("id") UUID id){
+    public ResponseEntity<ResponseDto<BoardResponseData>> getBoardById(@AuthenticatedUser User user, @PathVariable("id") UUID id){
         BoardResponseData boardResponseData = boardService.getBoardById(user, id);
         return new ResponseEntity<>(ResponseDto.res(HttpStatus.OK,"게시글을 조회합니다.", boardResponseData), HttpStatus.OK);
     }
 
     //게시글 삭제
-    //@AuthenticatedUser 어노테이션 추가해서 인증된 유저 받는 거 수정
     @DeleteMapping("/{id}")
-    public ResponseEntity<ResponseDto<Void>> removeBoardById(User user, @PathVariable("id") UUID id){
+    public ResponseEntity<ResponseDto<Void>> removeBoardById(@AuthenticatedUser User user, @PathVariable("id") UUID id){
         boardService.removeBoardById(user, id);
         return new ResponseEntity<>(ResponseDto.res(HttpStatus.OK,"게시글이 삭제되었습니다."), HttpStatus.OK);
     }
