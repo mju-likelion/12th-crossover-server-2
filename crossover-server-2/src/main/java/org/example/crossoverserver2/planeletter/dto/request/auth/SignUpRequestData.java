@@ -9,8 +9,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
-import static org.example.crossoverserver2.planeletter.constant.RegexPatterns.APPLICATION_PASSWORD_PATTERN;
-import static org.example.crossoverserver2.planeletter.constant.RegexPatterns.APPLICATION_USERID_PATTERN;
+import static org.example.crossoverserver2.planeletter.constant.RegexPatterns.*;
 
 
 @AllArgsConstructor
@@ -28,6 +27,7 @@ public class SignUpRequestData {
     private String password;
 
     @NotBlank(message = "이름은 필수 항목입니다.")
+    @Pattern(regexp = APPLICATION_USERNAME_PATTERN, message = "이름은 2~10자 미만의 한글로 작성해야 합니다.")
     private String name;
 
     @NotBlank(message = "이메일은 필수 항목입니다.")
