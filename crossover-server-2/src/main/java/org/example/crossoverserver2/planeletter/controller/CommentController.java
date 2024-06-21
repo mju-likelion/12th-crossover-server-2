@@ -23,7 +23,6 @@ public class CommentController {
 
     public final CommentService commentService;
 
-    //댓글 작성
     @PostMapping
     public ResponseEntity<ResponseDto<Void>> writeComment(@AuthenticatedUser User user, @PathVariable UUID boardId, @RequestBody @Valid WriteCommentDto writeCommentDto){
         commentService.writeComment(user,boardId,writeCommentDto);
