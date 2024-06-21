@@ -1,9 +1,0 @@
-package org.example.crossoverserver2.planeletter.exception;
-
-import org.example.crossoverserver2.planeletter.exception.errorcode.ErrorCode;
-
-public class AlreadyExistException extends CustomException{
-    public AlreadyExistException(ErrorCode errorCode, String detail) {
-        super(errorCode, detail);
-    }
-}

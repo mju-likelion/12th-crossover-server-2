@@ -31,7 +31,7 @@ public class ExceptionController {
     }
 
     //DTO Validation 예외처리 핸들
-    @ExceptionHandler(ValidationException.class)
+    @ExceptionHandler({ValidationException.class, MethodArgumentNotValidException.class})
     public ResponseEntity<ErrorResponseDto> handleMethodArgumentNotValidException(
             MethodArgumentNotValidException methodArgumentNotValidException){
         //methodArgumentNotValidException의 BindingResult의 FieldError(유효성 검증 실패 필드)를 찾아서 저장
