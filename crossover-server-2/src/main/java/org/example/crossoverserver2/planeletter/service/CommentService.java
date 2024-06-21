@@ -2,6 +2,7 @@ package org.example.crossoverserver2.planeletter.service;
 
 import lombok.AllArgsConstructor;
 import org.example.crossoverserver2.planeletter.dto.request.comment.WriteCommentDto;
+import org.example.crossoverserver2.planeletter.dto.response.PaginationDto;
 import org.example.crossoverserver2.planeletter.dto.response.comment.CommentDto;
 import org.example.crossoverserver2.planeletter.dto.response.comment.CommentListResponseData;
 import org.example.crossoverserver2.planeletter.exception.ForbiddenException;
@@ -11,6 +12,10 @@ import org.example.crossoverserver2.planeletter.model.Comment;
 import org.example.crossoverserver2.planeletter.model.User;
 import org.example.crossoverserver2.planeletter.repository.BoardRepository;
 import org.example.crossoverserver2.planeletter.repository.CommentRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -36,9 +41,25 @@ public class CommentService {
     }
 
     //댓글 조회
-    public CommentListResponseData getCommentList(UUID boardId){
+    public CommentListResponseData getCommentList(UUID boardId, int page){
         existsBoard(boardId);
-        List<CommentDto> comments = commentRepository.findAllByBoard(boardRepository.findBoardById(boardId)).stream()
+
+        int pageSize = 10;
+        Sort sort = Sort.by(Sort.Order.desc("createdAt"));  //작성순 정렬
+        Pageable pageable = PageRequest.of(page, pageSize, sort);   //페이지의 번호, 사이즈, 정렬 조건 설정
+
+        Page<Comment>  commentPage = commentRepository.findAllByBoard(boardRepository.findBoardById(boardId), pageable);
+
+        if(commentPage.getTotalPages() <= page){
+            throw new NotFoundException(ErrorCode.PAGE_CONFLICT);
+        }
+
+        PaginationDto paginationDto = PaginationDto.builder()
+                .totalPage(commentPage.getTotalPages())
+                .currentPage(commentPage.getNumber())
+                .build();
+
+        List<CommentDto> comments = commentPage.stream()
                 //CommentDto 형식으로 변환
                 .map(comment -> CommentDto.builder()
                         .name(comment.getUser().getName())
@@ -46,7 +67,11 @@ public class CommentService {
                         .createdTime(comment.getCreatedAt())
                         .build())
                 .collect(Collectors.toList());
-        CommentListResponseData commentListResponseData = CommentListResponseData.builder().commentList(comments).build();
+
+        CommentListResponseData commentListResponseData = CommentListResponseData.builder()
+                .commentList(comments)
+                .paginationDto(paginationDto)
+                .build();
         return commentListResponseData;
     }
 
