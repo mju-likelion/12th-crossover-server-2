@@ -25,6 +25,7 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor
@@ -62,13 +63,14 @@ public class AuthService {
         userRepository.save(user);
     }
 
-    public void login(LoginRequestData loginRequestData){
+    public UUID login(LoginRequestData loginRequestData){
         User user = userRepository.findByUserId(loginRequestData.getId())
                 .orElseThrow(()-> new AuthorizedException(ErrorCode.USER_UNAUTHORIZED));
         if(!passwordHashEncryption.matches(loginRequestData.getPassword(), user.getSalt(), user.getPassword())){
             throw new AuthorizedException(ErrorCode.USER_UNAUTHORIZED);
         }
 
+        return user.getId();
     }
 
 
