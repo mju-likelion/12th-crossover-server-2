@@ -28,6 +28,7 @@ public class CommentController {
         commentService.writeComment(user,boardId,writeCommentDto);
         return new ResponseEntity<>(ResponseDto.res(HttpStatus.CREATED,"댓글을 성공적으로 작성하였습니다."), HttpStatus.CREATED);
     }
+  
     //댓글 조회
     //댓글도 페이지네이션?
     @GetMapping
