@@ -23,12 +23,12 @@ public class CommentController {
 
     public final CommentService commentService;
 
-    //댓글 작성
     @PostMapping
     public ResponseEntity<ResponseDto<Void>> writeComment(@AuthenticatedUser User user, @PathVariable UUID boardId, @RequestBody @Valid WriteCommentDto writeCommentDto){
         commentService.writeComment(user,boardId,writeCommentDto);
         return new ResponseEntity<>(ResponseDto.res(HttpStatus.CREATED,"댓글을 성공적으로 작성하였습니다."), HttpStatus.CREATED);
     }
+  
     //댓글 조회
     //댓글도 페이지네이션?
     @GetMapping

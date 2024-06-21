@@ -73,7 +73,6 @@ public class BoardService {
     //게시글 상세 조회
     public BoardResponseData getBoardById(User user, UUID id){
         existsBoard(id);        //해당 게시글 존재 여부
-        checkUser(user, id);    //해당 게시글 접근 가능 여부
         Board board = boardRepository.findBoardById(id);
         BoardResponseData boardResponseData = BoardResponseData.builder()
                         .name(board.getUser().getName())
