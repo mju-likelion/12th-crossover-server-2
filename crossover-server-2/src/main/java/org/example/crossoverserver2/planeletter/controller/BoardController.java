@@ -26,6 +26,7 @@ public class BoardController {
     //게시글 작성
     @PostMapping
     public ResponseEntity<ResponseDto<Void>> writeBoard(@AuthenticatedUser User user, @RequestBody @Valid WriteBoardDto writeBoardDto){
+
         boardService.writeBoard(user, writeBoardDto);
         return new ResponseEntity<>(ResponseDto.res(HttpStatus.CREATED,"게시글이 작성되었습니다."), HttpStatus.CREATED);
     }
