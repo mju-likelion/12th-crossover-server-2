@@ -3,8 +3,6 @@ package org.example.crossoverserver2.planeletter.dto.request.auth;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NonNull;
-import lombok.Setter;
 
 @Getter
 @AllArgsConstructor

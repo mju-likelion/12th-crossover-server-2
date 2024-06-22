@@ -1,6 +1,5 @@
 package org.example.crossoverserver2.planeletter.exception;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.example.crossoverserver2.planeletter.exception.errorcode.ErrorCode;
 

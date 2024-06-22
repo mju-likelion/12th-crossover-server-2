@@ -3,13 +3,11 @@ package org.example.crossoverserver2.planeletter.authentication;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.example.crossoverserver2.planeletter.exception.AuthorizedException;
 import org.example.crossoverserver2.planeletter.exception.errorcode.ErrorCode;
 import org.example.crossoverserver2.planeletter.model.User;
 import org.example.crossoverserver2.planeletter.repository.UserRepository;
 import org.springframework.stereotype.Component;
-import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import java.util.UUID;

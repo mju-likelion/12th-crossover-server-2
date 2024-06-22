@@ -7,24 +7,12 @@ import org.example.crossoverserver2.planeletter.dto.request.auth.SignUpRequestDa
 import org.example.crossoverserver2.planeletter.dto.response.clause.ClauseListResponseData;
 import org.example.crossoverserver2.planeletter.exception.AuthorizedException;
 import org.example.crossoverserver2.planeletter.exception.ConflictException;
-import org.example.crossoverserver2.planeletter.exception.ForbiddenException;
-import org.example.crossoverserver2.planeletter.exception.NotFoundException;
 import org.example.crossoverserver2.planeletter.exception.errorcode.ErrorCode;
-import org.example.crossoverserver2.planeletter.model.Clause;
 import org.example.crossoverserver2.planeletter.model.User;
-import org.example.crossoverserver2.planeletter.model.UserClause;
 import org.example.crossoverserver2.planeletter.repository.ClauseRepository;
-import org.example.crossoverserver2.planeletter.repository.UserClauseRepository;
 import org.example.crossoverserver2.planeletter.repository.UserRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.text.DateFormat;
-import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
 import java.util.UUID;
 
 @Service

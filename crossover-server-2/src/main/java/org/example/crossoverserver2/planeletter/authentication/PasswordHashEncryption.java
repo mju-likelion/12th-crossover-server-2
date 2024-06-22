@@ -1,12 +1,10 @@
 package org.example.crossoverserver2.planeletter.authentication;
 
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
-import java.security.Key;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
@@ -17,10 +15,9 @@ public class PasswordHashEncryption {
 
     private static final String PBKDF2_WITH_SHA1 = "PBKDF2WithHmacSHA1";
 
-//    private final String salt; //섞어주는 랜덤 문자열
     private final int iterationCount;// 반복 횟수(암호화 강도)
     private final int keyLength; // 키 길이
-    private final String salt;
+    private final String salt;  // 랜덤 문자열 salt 값
 
     public PasswordHashEncryption (@Value("${encryption.pbkdf2.iteration-count}")final int iterationCount,
                                    @Value("${encryption.pbkdf2.key-length}")final int keyLength,
