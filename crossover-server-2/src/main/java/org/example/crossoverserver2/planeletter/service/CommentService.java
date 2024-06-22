@@ -51,7 +51,7 @@ public class CommentService {
         Page<Comment>  commentPage = commentRepository.findAllByBoard(boardRepository.findBoardById(boardId), pageable);
 
         if(commentPage.getTotalPages() <= page){
-            throw new NotFoundException(ErrorCode.PAGE_CONFLICT);
+            throw new NotFoundException(ErrorCode.NOT_FOUND_PAGE);
         }
 
         PaginationDto paginationDto = PaginationDto.builder()

@@ -10,7 +10,9 @@ import org.example.crossoverserver2.planeletter.dto.request.auth.LoginRequestDat
 import org.example.crossoverserver2.planeletter.dto.request.auth.SignUpRequestData;
 import org.example.crossoverserver2.planeletter.dto.ResponseDto;
 import org.example.crossoverserver2.planeletter.dto.response.clause.ClauseListResponseData;
+import org.example.crossoverserver2.planeletter.model.User;
 import org.example.crossoverserver2.planeletter.service.AuthService;
+import org.example.crossoverserver2.planeletter.service.ClauseService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +28,7 @@ import java.util.UUID;
 public class AuthController {
 
     private final AuthService authService;
+    private final ClauseService clauseService;
     private final JwtTokenProvider jwtTokenProvider;
 
     @GetMapping("/sign-up")
@@ -36,7 +39,8 @@ public class AuthController {
 
     @PostMapping("/sign-up")
     public ResponseEntity<ResponseDto<Void>> signUp(@RequestBody @Valid SignUpRequestData signUpRequestData){
-        authService.signUp(signUpRequestData);
+        User user = authService.signUp(signUpRequestData);
+        clauseService.essentialRegister(user);
         return new ResponseEntity<>(ResponseDto.res(HttpStatus.CREATED, "회원가입 성공"),HttpStatus.CREATED);
     }
 
@@ -48,8 +52,8 @@ public class AuthController {
         ResponseCookie cookie = ResponseCookie.from("AccessToken", JwtEncoder.encodeJwtBearerToken(accessToken))
                 .maxAge(Duration.ofSeconds(60 * 30))//30분
                 .path("/")//모든 경로에서 접근가능
-//                .httpOnly(true)//브라우저에서 쿠키에 접근 못하도록
-//                .secure(true)//https 사용 시에만 토큰 사용
+                .sameSite("None").httpOnly(true)//브라우저에서 쿠키에 접근 못하도록
+                .secure(true)//https 사용 시에만 토큰 사용
                 .build();
 
         log.info(cookie.toString());
