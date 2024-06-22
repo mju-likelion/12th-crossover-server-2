@@ -65,6 +65,8 @@ public class AuthController {
     public ResponseEntity<ResponseDto<Void>> logout(HttpServletResponse httpServletResponse){
         ResponseCookie cookie =ResponseCookie.from("AccessToken", null)
                 .maxAge(0)
+                .sameSite("None").httpOnly(true)//보안을 위해 설정
+                .secure(true)
                 .path("/")
                 .build();
         httpServletResponse.addHeader("Set-Cookie", cookie.toString());
