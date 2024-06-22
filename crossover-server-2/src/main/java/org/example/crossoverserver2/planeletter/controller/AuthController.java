@@ -48,6 +48,8 @@ public class AuthController {
         ResponseCookie cookie = ResponseCookie.from("AccessToken", JwtEncoder.encodeJwtBearerToken(accessToken))
                 .maxAge(Duration.ofSeconds(60 * 30))//30분
                 .path("/")//모든 경로에서 접근가능
+                .sameSite("None").secure(true)
+                .httpOnly(true)
 //                .httpOnly(true)//브라우저에서 쿠키에 접근 못하도록
 //                .secure(true)//https 사용 시에만 토큰 사용
                 .build();
