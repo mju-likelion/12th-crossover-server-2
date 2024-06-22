@@ -40,7 +40,6 @@ public class BoardController {
 
     //게시글 상세 조회
     @GetMapping("/{id}")
-    //@AuthenticatedUser 어노테이션 추가해서 인증된 유저 받는 거 수정
     public ResponseEntity<ResponseDto<BoardResponseData>> getBoardById(@AuthenticatedUser User user, @PathVariable("id") UUID id){
         BoardResponseData boardResponseData = boardService.getBoardById(user, id);
         return new ResponseEntity<>(ResponseDto.res(HttpStatus.OK,"게시글을 조회합니다.", boardResponseData), HttpStatus.OK);

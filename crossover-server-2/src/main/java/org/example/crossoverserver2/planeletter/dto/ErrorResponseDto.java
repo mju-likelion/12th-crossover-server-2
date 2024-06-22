@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.example.crossoverserver2.planeletter.exception.CustomException;
 
-import java.lang.annotation.Target;
 
 @Getter
 @AllArgsConstructor

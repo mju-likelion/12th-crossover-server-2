@@ -8,7 +8,6 @@ import org.example.crossoverserver2.planeletter.dto.ResponseDto;
 import org.example.crossoverserver2.planeletter.dto.response.comment.CommentListResponseData;
 import org.example.crossoverserver2.planeletter.model.User;
 import org.example.crossoverserver2.planeletter.service.CommentService;
-import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -30,12 +29,12 @@ public class CommentController {
     }
   
     //댓글 조회
-    //댓글도 페이지네이션?
     @GetMapping
     public ResponseEntity<ResponseDto<CommentListResponseData>> getCommentList(@PathVariable("boardId") UUID boardId, @RequestParam(value = "page", defaultValue = "0") int page){
         CommentListResponseData commentListResponseData = commentService.getCommentList(boardId, page);
         return new ResponseEntity<>(ResponseDto.res(HttpStatus.OK, "댓글 목록을 조회합니다.", commentListResponseData),HttpStatus.OK);
     }
+
     //댓글 삭제
     @DeleteMapping("/{id}")
     public ResponseEntity<ResponseDto<Void>> removeCommentById(@AuthenticatedUser User user
