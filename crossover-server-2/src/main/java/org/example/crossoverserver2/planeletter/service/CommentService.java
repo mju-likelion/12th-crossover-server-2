@@ -78,7 +78,7 @@ public class CommentService {
     //댓글 삭제
     public void removeCommentById(User user, UUID boardId, UUID id){
         existsBoard(boardId);
-        checkUser(user, boardId);
+        checkUser(user, id);
         commentRepository.deleteById(id);
     }
 
@@ -90,8 +90,8 @@ public class CommentService {
     }
 
     //해당 접근 유저가 댓글 작성자와 일치하는지 확인
-    public boolean checkUser(User user, UUID boardId){
-        if(boardRepository.existsByUserAndId(user, boardId)){
+    public boolean checkUser(User user, UUID id){
+        if(commentRepository.existsByUserAndId(user, id)){
             return true;
         } throw new ForbiddenException(ErrorCode.NO_ACCESS, "해당 댓글 접근 권한이 없습니다.");
     }
