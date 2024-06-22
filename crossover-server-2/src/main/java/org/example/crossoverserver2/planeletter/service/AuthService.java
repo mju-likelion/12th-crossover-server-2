@@ -40,7 +40,7 @@ public class AuthService {
         return ClauseListResponseData.clauseListResponseData(clauseRepository.findAll());
     }
 
-    public void signUp(SignUpRequestData signUpRequestData){
+    public User signUp(SignUpRequestData signUpRequestData){
 
         if(userRepository.existsByEmail(signUpRequestData.getEmail())){
             throw new ConflictException(ErrorCode.EMAIL_CONFLICT);
@@ -49,30 +49,27 @@ public class AuthService {
             throw new ConflictException(ErrorCode.USERID_CONFLICT);
         }
 
-        String salt = String.valueOf(LocalDateTime.now());
-        String encryptPassword = passwordHashEncryption.encrypt(signUpRequestData.getPassword(),salt);
+        String encryptPassword = passwordHashEncryption.encrypt(signUpRequestData.getPassword());
 
         User user = User.builder()
                 .name(signUpRequestData.getName())
                 .userId(signUpRequestData.getId())
                 .email(signUpRequestData.getEmail())
                 .password(encryptPassword)
-                .salt(salt)
                 .build();
 
         userRepository.save(user);
+
+        return user;
     }
 
     public UUID login(LoginRequestData loginRequestData){
         User user = userRepository.findByUserId(loginRequestData.getId())
                 .orElseThrow(()-> new AuthorizedException(ErrorCode.USER_UNAUTHORIZED));
-        if(!passwordHashEncryption.matches(loginRequestData.getPassword(), user.getSalt(), user.getPassword())){
+        if(!passwordHashEncryption.matches(loginRequestData.getPassword(), user.getPassword())){
             throw new AuthorizedException(ErrorCode.USER_UNAUTHORIZED);
         }
 
         return user.getId();
     }
-
-
-
 }

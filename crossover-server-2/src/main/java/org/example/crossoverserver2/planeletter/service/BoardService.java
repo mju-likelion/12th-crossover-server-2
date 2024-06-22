@@ -49,7 +49,7 @@ public class BoardService {
         Page<Board> boardPage = boardRepository.findAll(pageable);  //해당 페이징 데이터를 모두 가져옴
 
         if(boardPage.getTotalPages() <= page){
-            throw new NotFoundException(ErrorCode.PAGE_CONFLICT);
+            throw new NotFoundException(ErrorCode.NOT_FOUND_PAGE);
         }
 
         PaginationDto pagination = PaginationDto.builder()

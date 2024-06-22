@@ -20,14 +20,17 @@ public class PasswordHashEncryption {
 //    private final String salt; //섞어주는 랜덤 문자열
     private final int iterationCount;// 반복 횟수(암호화 강도)
     private final int keyLength; // 키 길이
+    private final String salt;
 
     public PasswordHashEncryption (@Value("${encryption.pbkdf2.iteration-count}")final int iterationCount,
-                                   @Value("${encryption.pbkdf2.key-length}")final int keyLength){
+                                   @Value("${encryption.pbkdf2.key-length}")final int keyLength,
+                                   @Value("${encryption.pbkdf2.salt}")final String salt){
         this.iterationCount = iterationCount;
         this.keyLength = keyLength;
+        this.salt = salt;
     }
 
-    public String encrypt(String plainPassword, String salt){
+    public String encrypt(final String plainPassword){
         try {
             KeySpec keySpec = new PBEKeySpec(plainPassword.toCharArray(), salt.getBytes(), iterationCount, keyLength);
             SecretKeyFactory keyFactory = SecretKeyFactory.getInstance(PBKDF2_WITH_SHA1);
@@ -43,8 +46,8 @@ public class PasswordHashEncryption {
 
     }
 
-    public boolean matches(final String plainPassword, final String salt, final String hashedPassword) {
-        return encrypt(plainPassword, salt).equals(hashedPassword);
+    public boolean matches(final String plainPassword, final String hashedPassword) {
+        return encrypt(plainPassword).equals(hashedPassword);
     }
 
 }
