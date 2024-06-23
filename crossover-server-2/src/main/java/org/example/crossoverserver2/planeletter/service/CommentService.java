@@ -48,31 +48,13 @@ public class CommentService {
         Sort sort = Sort.by(Sort.Order.desc("createdAt"));  //작성순 정렬
         Pageable pageable = PageRequest.of(page, pageSize, sort);   //페이지의 번호, 사이즈, 정렬 조건 설정
 
-        Page<Comment>  commentPage = commentRepository.findAllByBoard(boardRepository.findBoardById(boardId), pageable);
+        Page<Comment> commentPage = commentRepository.findAllByBoard(boardRepository.findBoardById(boardId), pageable);
 
         if(commentPage.getTotalPages() <= page){
             throw new NotFoundException(ErrorCode.NOT_FOUND_PAGE);
         }
 
-        PaginationDto paginationDto = PaginationDto.builder()
-                .totalPage(commentPage.getTotalPages())
-                .currentPage(commentPage.getNumber())
-                .build();
-
-        List<CommentDto> comments = commentPage.stream()
-                //CommentDto 형식으로 변환
-                .map(comment -> CommentDto.builder()
-                        .name(comment.getUser().getName())
-                        .content(comment.getContent())
-                        .createdTime(comment.getCreatedAt())
-                        .build())
-                .collect(Collectors.toList());
-
-        CommentListResponseData commentListResponseData = CommentListResponseData.builder()
-                .commentList(comments)
-                .paginationDto(paginationDto)
-                .build();
-        return commentListResponseData;
+        return CommentListResponseData.commentListResponseData(commentPage);
     }
 
     //댓글 삭제

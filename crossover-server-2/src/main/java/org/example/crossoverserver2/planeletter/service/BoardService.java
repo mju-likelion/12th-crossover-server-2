@@ -52,22 +52,7 @@ public class BoardService {
             throw new NotFoundException(ErrorCode.NOT_FOUND_PAGE);
         }
 
-        PaginationDto pagination = PaginationDto.builder()
-                .totalPage(boardPage.getTotalPages())
-                .currentPage(boardPage.getNumber())
-                .build();
-
-        List<BoardDto> boards = boardPage.stream()
-                //BoardDto 형식으로 변환
-                .map(board -> BoardDto.builder()
-                        .name(board.getUser().getName())
-                        .title(board.getTitle())
-                        .content(board.getContent())
-                        .createdTime(board.getCreatedAt())
-                        .build())
-                .collect(Collectors.toList());
-        BoardListResponseData boardListResponseData = BoardListResponseData.builder().boardList(boards).pagination(pagination).build();
-        return boardListResponseData;
+        return BoardListResponseData.boardListResponseData(boardPage);
     }
 
     //게시글 상세 조회
