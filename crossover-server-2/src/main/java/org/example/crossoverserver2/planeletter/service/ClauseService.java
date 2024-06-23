@@ -23,10 +23,8 @@ public class ClauseService {
                 UserClause.builder()
                         .clause(i)
                         .user(user)
-                .build()
+                        .build()
         ));
-
     }
-
 
 }
