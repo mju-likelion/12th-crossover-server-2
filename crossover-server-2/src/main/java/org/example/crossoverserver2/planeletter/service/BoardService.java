@@ -72,29 +72,20 @@ public class BoardService {
 
     //게시글 삭제
     public void removeBoardById(User user, UUID id){
-//        existsBoard(id);        //해당 게시글 존재 여부
-//        checkUser(user, id);    //해당 게시글 접근 가능 여부
-//        boardRepository.deleteById(id);
-        //여기도 살짝 변경했습니다.
-        //사실 이전 코드와 큰 차이는 없겠지만, 이렇게 작성하시면 deleteById메소드를 새로 작성할 필요 없이
-        //JpaRepository에서 기본적으로 제공하는 delete메소드를 사용할 수 있습니다
         Board board = findBoardById(id);
-        checkUser(user, id);
+        checkUser(user, board);
         boardRepository.delete(board);
     }
 
     //게시글 존재 여부 확인
-    //아래 주석은 현서님이 이해하시기 편하시라고 작성했어요 한번 보시고 머지 하시기 전에 다 지워주시면 됩니당
-    //이 코드는 boardRepository에 존재하는 기본 findById메소드를 사용해서 boardId로 Board를 찾는 메소드입니다.
-    //findById는 기본적으로 반환 타입이 Optional이기 때문에 이 메소드로 예외처리까지 한번에 진행할 수 있어서 이렇게 작성하는 것도 좋을 것 같습니다!
     private Board findBoardById(UUID boardId){
         return boardRepository.findById(boardId).orElseThrow(()-> new NotFoundException(ErrorCode.NOT_FOUND_BOARD));
     }
 
     //접근 유저와 게시글 작성자가 일치한지 확인
-    public boolean checkUser(User user, UUID id){
-        if(boardRepository.existsByUserAndId(user,id)){
-            return true;
-        } throw new ForbiddenException(ErrorCode.NO_ACCESS, "해당 게시글에 접근 권한이 없습니다.");
+    private void checkUser(User user, Board board){
+        if(!board.getUser().getId().equals(user.getId())){
+            throw new ForbiddenException(ErrorCode.NO_ACCESS, "해당 게시글에 접근 권한이 없습니다.");
+        }
     }
 }

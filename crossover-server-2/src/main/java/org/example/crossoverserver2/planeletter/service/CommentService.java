@@ -70,12 +70,6 @@ public class CommentService {
     }
 
     //게시글 존재 여부 확인
-    //사실 이 코드는 굳이? 싶을 수도 있어서 기존 코드를 사용하셔도 괜찮은데, 기본적으로 return true를 반환할 필요가 없기 때문에 void로 작성하시는 게 보기에 조금 더 좋을 수 있을 것 같아서 건드려 봤습니다.
-//    public boolean existsBoard(UUID boardId){
-//        if(boardRepository.existsById(boardId)){
-//            return true;
-//        } throw new NotFoundException(ErrorCode.NOT_FOUND_BOARD);
-//    }
     private void existsBoard(UUID boardId){
         if (!boardRepository.existsById(boardId)){
             throw new NotFoundException(ErrorCode.NOT_FOUND_BOARD);
@@ -87,12 +81,6 @@ public class CommentService {
     }
 
     //해당 접근 유저가 댓글 작성자와 일치하는지 확인
-    //작성자를 확인하는 코드의 경우에 파라미터로 유저와 comment를 직접 받는 게 이후에 코드가 달라지더라도 재사용하기 좋다고 대현님이 말씀해주셔서 이렇게 바꿔봤습니다.
-//    public boolean checkUser(User user, UUID id){
-//        if(commentRepository.existsByUserAndId(user, id)){
-//            return true;
-//        } throw new ForbiddenException(ErrorCode.NO_ACCESS, "해당 댓글 접근 권한이 없습니다.");
-//    }
     private void checkUser(User user, Comment comment){
         if(!comment.getUser().getId().equals(user.getId())){
             throw new ForbiddenException(ErrorCode.NO_ACCESS, "해당 댓글 접근 권한이 없습니다.");
