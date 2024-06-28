@@ -10,13 +10,12 @@ import org.example.crossoverserver2.planeletter.model.Clause;
 @Getter
 @AllArgsConstructor
 public class ClauseDto {
+    private String title;
+    private boolean essential;
+    private String content;
 
-    public String title;
-
-    public String content;
 
     public static ClauseDto clauseDto(Clause clause){
-        return new ClauseDto(clause.getTitle(), clause.getContent());
+        return new ClauseDto(clause.getTitle(), clause.isEssential(), clause.getContent());
     }
-
 }

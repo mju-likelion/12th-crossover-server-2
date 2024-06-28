@@ -23,12 +23,14 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+
 @Service
 @AllArgsConstructor
 public class BoardService {
 
     public final BoardRepository boardRepository;
     public final UserRepository userRepository;
+    private final static int BOARD_PAGE_SIZE = 10;
 
     //게시글 작성
     public void writeBoard(User user, WriteBoardDto writeBoardDto){
@@ -42,7 +44,7 @@ public class BoardService {
 
     //게시글 목록 조회
     public BoardListResponseData getBoardListByPage(int page){
-        int pageSize = 10;  //한 페이지에 게시글 10개씩
+        int pageSize = BOARD_PAGE_SIZE;  //한 페이지에 게시글 10개씩
         Sort sort = Sort.by(Sort.Order.desc("createdAt"));  //작성순으로 정렬
         Pageable pageable = PageRequest.of(page, pageSize, sort);   //페이지 번호, 페이지 크기, 정렬 조건 설정
 
@@ -52,28 +54,13 @@ public class BoardService {
             throw new NotFoundException(ErrorCode.NOT_FOUND_PAGE);
         }
 
-        PaginationDto pagination = PaginationDto.builder()
-                .totalPage(boardPage.getTotalPages())
-                .currentPage(boardPage.getNumber())
-                .build();
-
-        List<BoardDto> boards = boardPage.stream()
-                //BoardDto 형식으로 변환
-                .map(board -> BoardDto.builder()
-                        .name(board.getUser().getName())
-                        .title(board.getTitle())
-                        .content(board.getContent())
-                        .createdTime(board.getCreatedAt())
-                        .build())
-                .collect(Collectors.toList());
-        BoardListResponseData boardListResponseData = BoardListResponseData.builder().boardList(boards).pagination(pagination).build();
-        return boardListResponseData;
+        return BoardListResponseData.boardListResponseData(boardPage);
     }
 
     //게시글 상세 조회
     public BoardResponseData getBoardById(User user, UUID id){
-        existsBoard(id);        //해당 게시글 존재 여부
-        Board board = boardRepository.findBoardById(id);
+        Board board = findBoardById(id);
+
         BoardResponseData boardResponseData = BoardResponseData.builder()
                         .name(board.getUser().getName())
                         .title(board.getTitle())
@@ -85,22 +72,20 @@ public class BoardService {
 
     //게시글 삭제
     public void removeBoardById(User user, UUID id){
-        existsBoard(id);        //해당 게시글 존재 여부
-        checkUser(user, id);    //해당 게시글 접근 가능 여부
-        boardRepository.deleteById(id);
+        Board board = findBoardById(id);
+        checkUser(user, board);
+        boardRepository.delete(board);
     }
 
     //게시글 존재 여부 확인
-    public boolean existsBoard(UUID id){
-        if (boardRepository.existsById(id)){
-            return true;
-        } throw new NotFoundException(ErrorCode.NOT_FOUND_BOARD);
+    private Board findBoardById(UUID boardId){
+        return boardRepository.findById(boardId).orElseThrow(()-> new NotFoundException(ErrorCode.NOT_FOUND_BOARD));
     }
 
     //접근 유저와 게시글 작성자가 일치한지 확인
-    public boolean checkUser(User user, UUID id){
-        if(boardRepository.existsByUserAndId(user,id)){
-            return true;
-        } throw new ForbiddenException(ErrorCode.NO_ACCESS, "해당 게시글에 접근 권한이 없습니다.");
+    private void checkUser(User user, Board board){
+        if(!board.getUser().getId().equals(user.getId())){
+            throw new ForbiddenException(ErrorCode.NO_ACCESS, "해당 게시글에 접근 권한이 없습니다.");
+        }
     }
 }

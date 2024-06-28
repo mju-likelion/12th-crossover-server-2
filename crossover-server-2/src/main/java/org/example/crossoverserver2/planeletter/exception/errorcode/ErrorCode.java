@@ -27,6 +27,7 @@ public enum ErrorCode {
     NOT_FOUND_USER("4040","유저를 찾을 수 없습니다."),
     NOT_FOUND_BOARD("4041","게시물을 찾을 수 없습니다."),
     NOT_FOUND_PAGE("4042", "존재하지 않는 페이지입니다."),
+    NOT_FOUND_COMMENT("4043", "존재하지 않는 댓글입니다."),
 
     //ConflictException
     EMAIL_CONFLICT("4090", "이미 존재하는 이메일입니다."),

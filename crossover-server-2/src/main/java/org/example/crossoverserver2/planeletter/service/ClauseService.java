@@ -8,6 +8,7 @@ import org.example.crossoverserver2.planeletter.repository.ClauseRepository;
 import org.example.crossoverserver2.planeletter.repository.UserClauseRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -17,16 +18,14 @@ public class ClauseService {
     private final ClauseRepository clauseRepository;
 
     public final void essentialRegister(User user){
-        List<Clause> clauses = clauseRepository.findAll();
+        List<Clause> clauses = clauseRepository.findAllByEssential(true).orElse(Collections.emptyList());
 
         clauses.stream().forEach(i->userClauseRepository.save(
                 UserClause.builder()
                         .clause(i)
                         .user(user)
-                .build()
+                        .build()
         ));
-
     }
-
 
 }
