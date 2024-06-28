@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import org.example.crossoverserver2.planeletter.dto.request.board.WriteBoardDto;
 import org.example.crossoverserver2.planeletter.dto.response.board.BoardDto;
 import org.example.crossoverserver2.planeletter.dto.response.board.BoardListResponseData;
-import org.example.crossoverserver2.planeletter.dto.response.board.BoardResponseData;
 import org.example.crossoverserver2.planeletter.dto.response.PaginationDto;
 import org.example.crossoverserver2.planeletter.exception.ForbiddenException;
 import org.example.crossoverserver2.planeletter.exception.NotFoundException;
@@ -50,7 +49,7 @@ public class BoardService {
 
         Page<Board> boardPage = boardRepository.findAll(pageable);  //해당 페이징 데이터를 모두 가져옴
 
-        if(boardPage.getTotalPages() <= page){
+        if(boardPage.getTotalPages() <= page && page!=0){
             throw new NotFoundException(ErrorCode.NOT_FOUND_PAGE);
         }
 
@@ -58,16 +57,10 @@ public class BoardService {
     }
 
     //게시글 상세 조회
-    public BoardResponseData getBoardById(User user, UUID id){
+    public BoardDto getBoardById(User user, UUID id){
         Board board = findBoardById(id);
 
-        BoardResponseData boardResponseData = BoardResponseData.builder()
-                        .name(board.getUser().getName())
-                        .title(board.getTitle())
-                        .content(board.getContent())
-                        .createdTime(board.getCreatedAt())
-                        .build();
-        return boardResponseData;
+        return BoardDto.boardDto(board);
     }
 
     //게시글 삭제

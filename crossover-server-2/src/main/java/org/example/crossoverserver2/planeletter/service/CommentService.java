@@ -54,7 +54,7 @@ public class CommentService {
 
         Page<Comment> commentPage = commentRepository.findAllByBoard(boardRepository.findBoardById(boardId), pageable);
 
-        if(commentPage.getTotalPages() <= page){
+        if(commentPage.getTotalPages() <= page && page!=0){
             throw new NotFoundException(ErrorCode.NOT_FOUND_PAGE);
         }
 
