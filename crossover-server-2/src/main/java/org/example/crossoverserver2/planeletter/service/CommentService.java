@@ -49,7 +49,7 @@ public class CommentService {
         existsBoard(boardId);
 
         int pageSize = COMMENT_PAGE_SIZE;
-        Sort sort = Sort.by(Sort.Order.desc("createdAt"));  //작성순 정렬
+        Sort sort = Sort.by(Sort.Order.asc("createdAt"));  //댓글 최신순으로 정렬
         Pageable pageable = PageRequest.of(page, pageSize, sort);   //페이지의 번호, 사이즈, 정렬 조건 설정
 
         Page<Comment> commentPage = commentRepository.findAllByBoard(boardRepository.findBoardById(boardId), pageable);
