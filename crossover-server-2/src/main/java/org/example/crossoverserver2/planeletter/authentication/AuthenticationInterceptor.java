@@ -23,6 +23,9 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
     public boolean preHandle(final HttpServletRequest request,
                              final HttpServletResponse response,
                              final Object handler) throws Exception {
+        if(request.getMethod().equals("OPTIONS")){
+            return true;
+        }
         String accessToken = AuthenticationExtractor.extract(request);
         UUID id = UUID.fromString(jwtTokenProvider.getPayload(accessToken)); // accessToken에서 payload추출
         User user = findUserByUserId(id);
